@@ -1,0 +1,27 @@
+/* list of users and their data
+   password will be stored as a hash
+   using Bcrypt
+*/
+CREATE TABLE IF NOT EXISTS user (
+	username TEXT PRIMARY KEY,
+	password BLOB NOT NULL,
+	role TEXT NOT NULL
+);
+
+/* list of companies */
+CREATE TABLE IF NOT EXISTS company (
+	symbol TEXT PRIMARY KEY,
+	name TEXT NOT NULL,
+	region TEXT NOT NULL,
+	marketHours TEXT,
+	overview TEXT
+);
+
+/* joining table to handle many-to-many relationship */
+CREATE TABLE IF NOT EXISTS watchlist (
+	keyid INTEGER PRIMARY KEY,
+	username TEXT NOT NULL,
+	symbol TEXT NOT NULL,
+	FOREIGN KEY (username) REFERENCES user(username),
+	FOREIGN KEY (symbol) REFERENCES company(symbol)
+);
